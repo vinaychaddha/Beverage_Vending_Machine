@@ -1,0 +1,37 @@
+/* This is a linker parameter file for the JL16 */
+
+NAMES END /* CodeWarrior will pass all the needed files to the linker by command line. But here you may add your own files too. */
+
+SEGMENTS /* Here all RAM/ROM areas of the device are listed. Used in PLACEMENT below. */
+    ROM                      =  READ_ONLY    0xBC00 TO 0xFBFF;
+    Z_RAM                    =  READ_WRITE   0x0060 TO 0x00FF;
+    RAM                      =  READ_WRITE   0x0100 TO 0x025F;
+END
+
+PLACEMENT /* Here all predefined and user segments are placed into the SEGMENTS defined above. */
+    DEFAULT_RAM                         INTO  RAM;
+    DEFAULT_ROM, ROM_VAR, STRINGS       INTO  ROM; /*  In case you want to use  as well, be sure the option -OnB=b is passed to the compiler. */
+    _DATA_ZEROPAGE, MY_ZEROPAGE         INTO  Z_RAM;
+END
+
+
+STACKSIZE 0x50
+
+VECTOR 0 _Startup				// reset vector
+VECTOR 1 _Dummy					// software interrupt
+VECTOR 2 _Dummy					// IRQ interrupt
+VECTOR 3 _Dummy					// (No Vector Assigned $FFF8-$FFF9)
+VECTOR 4 _Dummy					// TIM1 Channel 0 Vector
+VECTOR 5 _Dummy					// TIM1 Channel 1 Vector
+VECTOR 6 _Timint				// TIM1 Overflow Vector
+VECTOR 7 _Dummy					// (No Vector Assigned $FFF0-$FFF1)
+VECTOR 8 _Dummy					// (No Vector Assigned $FFEE-$FFEF)
+VECTOR 9 _Dummy					// (No Vector Assigned $FFEC-$FFED)
+VECTOR 10 _Dummy				// (No Vector Assigned $FFEA-$FFEB)
+VECTOR 11 _Dummy				// (No Vector Assigned $FFE8-$FFF9)
+VECTOR 12 _Dummy				// (No Vector Assigned $FFE6-$FFE7)
+VECTOR 13 _Dummy				// (No Vector Assigned $FFE4-$FFE5)
+VECTOR 14 _Dummy				// (No Vector Assigned $FFE2-$FFE3)
+VECTOR 15 _Dummy				// Keyboard Vector
+VECTOR 16 _Dummy				// ADC Conversion Complete Vector
+
